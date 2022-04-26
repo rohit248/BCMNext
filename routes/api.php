@@ -19,4 +19,7 @@ Route::prefix('user')->group(function () {
     //Api Route to create a phonebook user
     Route::post('/', [PhonebookUserController::class, 'create']);
 
+    //Api Route to edit a phonebook user {pb_user_id} is ID of phone book user need to be edited
+    Route::put('/{pb_user_id}', [PhonebookUserController::class, 'edit']);
+
 });

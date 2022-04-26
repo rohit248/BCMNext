@@ -47,5 +47,49 @@ class PhonebookUserController extends Controller
 
   }
 
+  /**
+   * Function will be called on edit user API call
+   *
+   * @var pb_user_id is ID of phoneBook user need to be edited
+   */
+  public function edit(Request $request,$pb_user_id)
+  {
+      try {
+
+        $validator = Validator::make($request->all(), [
+          'first_name' => 'required|string|max:20',
+          'last_name' => 'string|max:20|nullable',
+        ]);
+
+
+        if ($validator->fails()) {
+          return response()->json(['status' => 'Failed','message' => $validator->errors()->all()],400);
+        }
+
+        $PhoneBookUser = PhoneBookUser::where('pb_user_id','=',$pb_user_id)->first();
+
+        if (!$PhoneBookUser)
+        {
+          return response()->json(['status' => 'Failed','message' => 'No Record Found.'],404);
+        }
+
+        $PhoneBookUser->first_name = $request->get('first_name');
+        $PhoneBookUser->last_name = $request->get('last_name');
+
+        if ($PhoneBookUser->save())
+        {
+          return response()->json(['status' => 'Success','message' => 'User updated SuccessFully.'],200);
+        }
+
+      } catch (\Exception $e) {
+
+        Log::debug($e);
+
+        return response()->json(['status' => 'Failed','message' => 'Failed to update user.Please try after some time.'],500);
+
+      }
+
+  }
+
 
 }

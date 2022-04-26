@@ -37,4 +37,6 @@ Route::prefix('contacts')->group(function () {
   //Api Route to add a contact detail for a phonebook user
   Route::post('/{pb_user_id}', [UserContactController::class, 'create']);
 
+  //Api Route to edit a contact detail for a phonebook user
+  Route::put('/{contact_id}', [UserContactController::class, 'edit']);
 });

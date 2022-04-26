@@ -63,7 +63,7 @@ class UserContactController extends Controller
    * Function will be called on edit user contact API call
    *
    * @var $request Request object
-   * @var $contact ID of phonebook user contact for which contact details need to be created
+   * @var $contact ID of phonebook user contact for which contact details need to be edited
    */
   public function edit(Request $request,$contact_id)
   {
@@ -99,6 +99,38 @@ class UserContactController extends Controller
         Log::debug($e);
 
         return response()->json(['status' => 'Failed','message' => 'Failed to update user contact.Please try after some time.'],500);
+
+      }
+
+  }
+
+  /**
+   * Function will be called on edit user contact API call
+   *
+   * @var $request Request object
+   * @var $contact ID of phonebook user contact for which contact details need to be deleted
+   */
+  public function delete(Request $request,$contact_id)
+  {
+      try {
+
+        $UserContact = UserContact::where('contact_id','=',$contact_id)->first();
+
+        if (!$UserContact)
+        {
+          return response()->json(['status' => 'Failed','message' => 'No Record Found.'],404);
+        }
+
+        if ($UserContact->delete())
+        {
+          return response()->json(['status' => 'Success','message' => 'User Contact deleted SuccessFully.'],201);
+        }
+
+      } catch (\Exception $e) {
+
+        Log::debug($e);
+
+        return response()->json(['status' => 'Failed','message' => 'Failed to delete user contact.Please try after some time.'],500);
 
       }
 

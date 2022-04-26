@@ -39,4 +39,7 @@ Route::prefix('contacts')->group(function () {
 
   //Api Route to edit a contact detail for a phonebook user
   Route::put('/{contact_id}', [UserContactController::class, 'edit']);
+
+  //Api Route to delete a contact detail for a phonebook user
+  Route::delete('/{contact_id}', [UserContactController::class, 'delete']);
 });

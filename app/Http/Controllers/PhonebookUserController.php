@@ -124,4 +124,33 @@ class PhonebookUserController extends Controller
   }
 
 
+  /**
+   * Function will be called to list phoneBook users
+   *
+   */
+  public function list(Request $request)
+  {
+      try {
+
+        $PhoneBookUser = PhoneBookUser::with('contacts')->paginate(10);
+
+        if (!$PhoneBookUser)
+        {
+          return response()->json(['status' => 'Failed','message' => 'No Record Found.'],404);
+        }
+
+        return response()->json(['status' => 'Success','message' => $PhoneBookUser],200);
+
+
+      } catch (\Exception $e) {
+
+        Log::debug($e);
+
+        return response()->json(['status' => 'Failed','message' => 'Failed to delete user.Please try after some time.'],500);
+
+      }
+
+  }
+
+
 }

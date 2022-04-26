@@ -25,4 +25,7 @@ Route::prefix('user')->group(function () {
     //Api Route to delete a phonebook user
     Route::delete('/{pb_user_id}', [PhonebookUserController::class, 'delete']);
 
+    //Api Route to list all phonebook users
+    Route::get('/', [PhonebookUserController::class, 'list']);
+
 });

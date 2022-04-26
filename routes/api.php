@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhonebookUserController;
+use App\Http\Controllers\UserContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,13 @@ Route::prefix('user')->group(function () {
 
     //Api Route to list all phonebook users
     Route::get('/', [PhonebookUserController::class, 'list']);
+
+});
+
+
+
+Route::prefix('contacts')->group(function () {
+  //Api Route to add a contact detail for a phonebook user
+  Route::post('/{pb_user_id}', [UserContactController::class, 'create']);
 
 });

@@ -92,4 +92,36 @@ class PhonebookUserController extends Controller
   }
 
 
+  /**
+   * Function will be called on delete user API call
+   *
+   * @var pb_user_id is ID of phoneBook user need to be deleted
+   */
+  public function delete(Request $request,$pb_user_id)
+  {
+      try {
+
+        $PhoneBookUser = PhoneBookUser::where('pb_user_id','=',$pb_user_id)->first();
+
+        if (!$PhoneBookUser)
+        {
+          return response()->json(['status' => 'Failed','message' => 'No Record Found.'],404);
+        }
+
+        if ($PhoneBookUser->delete())
+        {
+          return response()->json(['status' => 'Success','message' => 'User deleted SuccessFully.'],200);
+        }
+
+      } catch (\Exception $e) {
+
+        Log::debug($e);
+
+        return response()->json(['status' => 'Failed','message' => 'Failed to delete user.Please try after some time.'],500);
+
+      }
+
+  }
+
+
 }
